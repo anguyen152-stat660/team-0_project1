@@ -32,7 +32,7 @@ Rationale: This should help identify the school districts in the most need of
 outreach based upon child poverty levels.
 
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
-for District_Name, and output the results to a temportatry dataset. Use PROC
+for District_Name, and output the results to a temporary dataset. Use PROC
 SORT extract and sort just the means the temporary dateset, and use PROC PRINT
 to print just the first twenty observations from the temporary dataset.
 
@@ -68,7 +68,7 @@ Research Question: How does the distribution of "Percent (%) Eligible FRPM
 Rationale: This would help inform whether outreach based upon child poverty
 levels should be provided to charter schools.
 
-Methodolody: Compute five-number summaries by charter-school indicator variable
+Methodology: Compute five-number summaries by charter-school indicator variable
 
 Limitations: This methodology does not account for schools with missing data,
 nor does it attempt to validate data in any way, like filtering for percentages
