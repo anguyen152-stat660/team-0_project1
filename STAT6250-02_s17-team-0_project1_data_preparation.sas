@@ -53,24 +53,53 @@ https://github.com/stat6250/team-0_project1/blob/master/frpm1516-edited.xls?raw=
 
 
 * load raw FRPM dataset over the wire;
-filename tempfile TEMP;
-proc http
-    method="get"
-    url="&inputDatasetURL."
-    out=tempfile
-    ;
-run;
-proc import
-    file=tempfile
-    out=frpm1516_raw
-    dbms=xls;
-run;
-filename tempfile clear;
+%macro loadDataIfNotAlreadyAvailable(dsn,url,filetype);
+    %put &=dsn;
+    %put &=url;
+    %put &=filetype;
+    %if
+        %sysfunc(exist(&dsn.)) = 0
+    %then
+        %do;
+            %put Loading dataset &dsn. over the wire now...;
+            filename tempfile TEMP;
+            proc http
+                method="get"
+                url="&url."
+                out=tempfile
+                ;
+            run;
+            proc import
+                file=tempfile
+                out=&dsn.
+                dbms=&filetype.;
+            run;
+            filename tempfile clear;
+        %end;
+    %else
+        %do;
+            %put Dataset &dsn. already exists. Please delete and try again.;
+        %end;
+%mend;
+%loadDataIfNotAlreadyAvailable(
+    FRPM1516_raw,
+    &inputDatasetURL.,
+    xls
+)
 
 
 * check raw FRPM dataset for duplicates with respect to its composite key;
-proc sort nodupkey data=FRPM1516_raw dupout=FRPM1516_raw_dups out=_null_;
-    by County_Code District_Code School_Code;
+proc sort
+        nodupkey
+        data=FRPM1516_raw
+        dupout=FRPM1516_raw_dups
+        out=_null_
+    ;
+    by
+        County_Code
+        District_Code
+        School_Code
+    ;
 run;
 
 
@@ -100,12 +129,26 @@ District_Name, and output the results to a temporary dataset, and use PROC SORT
 to extract and sort just the means the temporary dateset, which will be used as
 part of data analysis by IL.
 ;
-proc means mean noprint data=FRPM1516_analytic_file;
-    class District_Name;
-    var Percent_Eligible_FRPM_K12;
-    output out=FRPM1516_analytic_file_temp;
+proc means
+        mean
+        noprint
+        data=FRPM1516_analytic_file
+    ;
+    class
+        District_Name
+    ;
+    var
+        Percent_Eligible_FRPM_K12
+    ;
+    output
+        out=FRPM1516_analytic_file_temp
+    ;
 run;
 
-proc sort data=FRPM1516_analytic_file_temp(where=(_STAT_="MEAN"));
-    by descending Percent_Eligible_FRPM_K12;
+proc sort
+        data=FRPM1516_analytic_file_temp(where=(_STAT_="MEAN"))
+    ;
+    by
+        descending Percent_Eligible_FRPM_K12
+    ;
 run;
