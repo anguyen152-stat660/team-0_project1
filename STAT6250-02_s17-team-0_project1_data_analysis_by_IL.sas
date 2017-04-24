@@ -32,6 +32,18 @@ title1
 title2
 'Rationale: This should help identify the school districts in the most need of outreach based upon child poverty levels.'
 ;
+
+footnote1
+'Based on the above output, 9 schools have 100% of their students eligible for free/reduced-price meals under the National School Lunch Program.'
+;
+
+footnote2
+'Moreover, we can see that virtually all of the top 20 schools appear to be elementary schools, suggesting increasing early childhood poverty.'
+;
+
+footnote3
+'Further analysis to look for geographic patterns is clearly warrented, given such high mean percentages of early childhood poverty.'
+;
 *
 Methodology: Use PROC PRINT to print just the first twenty observations from
 the temporary dataset created in the corresponding data-prep file.
@@ -59,6 +71,19 @@ title1
 title2
 'Rationale: This would help inform whether outreach based upon child poverty levels should be provided to charter schools.'
 ;
+
+footnote1
+'Based on the above output, the distribution of percentage eligible for free/reduced-price meals under the National School Lunch Program appears to be roughly the same for Charter and Non-charter Schools.'
+;
+
+footnote2
+'However, Charter schools do appear to have slighly lower childhood poverty rates, overall, given the smaller first and second quartiles.'
+;
+
+footnote3
+"In addition, more analysis is needed for the group with value 'N/A', which has a significanly reduced child poverty distribution."
+;
+
 *
 Methodology: Compute five-number summaries by charter-school indicator variable
 
@@ -84,6 +109,13 @@ title1
 
 title2
 'Rationale: This would help determine whether outreach based upon child poverty levels should be provided to smaller schools. E.g., if enrollment is highly correlated with FRPM rate, then only larger schools would tend to have high child poverty rates.'
+;
+
+footnote1
+"Based on the above output, there's no clear inferential pattern for predicting the percentage eligible for free/reduced-price meals under the National School Lunch Program based on school enrollment since cell counts don't tend to follow trends for increasing or decreasing consistently."
+;
+footnote2
+'However, this is an incredibly course analysis since only quartiles are used, so a follow-up analysis using a more sensitive instrument (like beta regression) might find useful correlations.'
 ;
 *
 Methodology: Use proc means to study the five-number summary of each variable,
