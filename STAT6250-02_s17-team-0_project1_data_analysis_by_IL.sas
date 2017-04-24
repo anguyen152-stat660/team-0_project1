@@ -16,7 +16,7 @@ See included file for dataset properties
 
 * environmental setup;
 
-* set relative file import path to current directory (using standard SAS trick;
+* set relative file import path to current directory (using standard SAS trick);
 X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";
 
 
@@ -57,9 +57,16 @@ Percent_Eligible_FRPM_K12 so that the means computed do not include any possible
 illegal values, and better handle missing data, e.g., by using a previous year's
 data or a rolling average of previous years' data as a proxy.
 ;
-proc print noobs data=FRPM1516_analytic_file_temp(obs=20);
-    id District_Name;
-    var Percent_Eligible_FRPM_K12;
+proc print
+        noobs
+        data=FRPM1516_analytic_file_temp(obs=20)
+    ;
+    id
+        District_Name
+    ;
+    var
+        Percent_Eligible_FRPM_K12
+    ;
 run;
 title;
 footnote;
@@ -98,9 +105,16 @@ Percent_Eligible_FRPM_K12 so that the statistics computed do not include any
 possible illegal values, and better handle missing data, e.g., by using a
 previous year's data or a rolling average of previous years' data as a proxy.
 ;
-proc means min q1 median q3 max data=FRPM1516_analytic_file;
-    class Charter_School;
-    var Percent_Eligible_FRPM_K12;
+proc means
+        min q1 median q3 max
+        data=FRPM1516_analytic_file
+    ;
+    class
+        Charter_School
+    ;
+    var
+        Percent_Eligible_FRPM_K12
+    ;
 run;
 title;
 footnote;
@@ -118,6 +132,7 @@ title2
 footnote1
 "Based on the above output, there's no clear inferential pattern for predicting the percentage eligible for free/reduced-price meals under the National School Lunch Program based on school enrollment since cell counts don't tend to follow trends for increasing or decreasing consistently."
 ;
+
 footnote2
 'However, this is an incredibly course analysis since only quartiles are used, so a follow-up analysis using a more sensitive instrument (like beta regression) might find useful correlations.'
 ;
@@ -134,14 +149,11 @@ method to find actual association between the variables.
 Follow-up Steps: A possible follow-up to this approach could use an inferential
 statistical technique like beta regression.
 ;
-proc means min q1 median q3 max data=FRPM1516_analytic_file;
-    var
-        Enrollment_K12
-        Percent_Eligible_FRPM_K12
+proc freq
+        data=FRPM1516_analytic_file
     ;
-run;
-proc freq data=FRPM1516_analytic_file;
-    table Enrollment_K12*Percent_Eligible_FRPM_K12
+    table
+        Enrollment_K12*Percent_Eligible_FRPM_K12
         / missing norow nocol nopercent
     ;
     format
