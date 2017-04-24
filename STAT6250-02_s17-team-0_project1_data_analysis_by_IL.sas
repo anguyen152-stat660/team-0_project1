@@ -31,10 +31,8 @@ values of "Percent (%) Eligible FRPM (K-12)"?
 Rationale: This should help identify the school districts in the most need of
 outreach based upon child poverty levels.
 
-Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
-for District_Name, and output the results to a temporary dataset. Use PROC
-SORT extract and sort just the means the temporary dateset, and use PROC PRINT
-to print just the first twenty observations from the temporary dataset.
+Methodology: Use PROC PRINT to print just the first twenty observations from
+the temporary dataset created in the corresponding data-prep file.
 
 Limitations: This methodology does not account for districts with missing data,
 nor does it attempt to validate data in any way, like filtering for percentages
@@ -45,16 +43,6 @@ Percent_Eligible_FRPM_K12 so that the means computed do not include any possible
 illegal values, and better handle missing data, e.g., by using a previous year's
 data or a rolling average of previous years' data as a proxy.
 ;
-proc means mean noprint data=FRPM1516_analytic_file;
-    class District_Name;
-    var Percent_Eligible_FRPM_K12;
-    output out=FRPM1516_analytic_file_temp;
-run;
-
-proc sort data=FRPM1516_analytic_file_temp(where=(_STAT_="MEAN"));
-    by descending Percent_Eligible_FRPM_K12;
-run;
-
 proc print noobs data=FRPM1516_analytic_file_temp(obs=20);
     id District_Name;
     var Percent_Eligible_FRPM_K12;

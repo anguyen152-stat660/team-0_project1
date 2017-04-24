@@ -92,3 +92,20 @@ data FRPM1516_analytic_file;
     ;
     set FRPM1516_raw;
 run;
+
+
+* 
+Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12 for
+District_Name, and output the results to a temporary dataset, and use PROC SORT
+to extract and sort just the means the temporary dateset, which will be used as
+part of data analysis by IL.
+;
+proc means mean noprint data=FRPM1516_analytic_file;
+    class District_Name;
+    var Percent_Eligible_FRPM_K12;
+    output out=FRPM1516_analytic_file_temp;
+run;
+
+proc sort data=FRPM1516_analytic_file_temp(where=(_STAT_="MEAN"));
+    by descending Percent_Eligible_FRPM_K12;
+run;
