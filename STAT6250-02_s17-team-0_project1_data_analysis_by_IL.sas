@@ -65,6 +65,7 @@ title;
 footnote;
 
 
+
 title1
 'Research Question: How does the distribution of "Percent (%) Eligible FRPM (K-12)" for charter schools compare to that of non-charter schools?'
 ;
@@ -103,6 +104,7 @@ proc means min q1 median q3 max data=FRPM1516_analytic_file;
 run;
 title;
 footnote;
+
 
 
 title1
