@@ -61,7 +61,8 @@ proc print noobs data=FRPM1516_analytic_file_temp(obs=20);
     id District_Name;
     var Percent_Eligible_FRPM_K12;
 run;
-
+title;
+footnote;
 
 
 title1
@@ -100,7 +101,8 @@ proc means min q1 median q3 max data=FRPM1516_analytic_file;
     class Charter_School;
     var Percent_Eligible_FRPM_K12;
 run;
-
+title;
+footnote;
 
 
 title1
@@ -145,3 +147,5 @@ proc freq data=FRPM1516_analytic_file;
         Percent_Eligible_FRPM_K12 Percent_Eligible_FRPM_K12_bins.
     ;
 run;
+title;
+footnote;
